@@ -1,0 +1,49 @@
+1️⃣ Docker on Ubuntu 22.04
+
+Install Docker (official way)
+
+sudo apt update
+sudo apt install -y ca-certificates curl gnupg
+
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
+ | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+echo \
+"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+https://download.docker.com/linux/ubuntu jammy stable" \
+| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+
+Enable Docker
+
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+
+docker --version
+
+---
+
+2️⃣ Docker on Amazon Linux 2023
+
+Amazon Linux does NOT use amazon-linux-extras anymore.
+
+Install Docker
+
+sudo dnf update -y
+sudo dnf install -y docker
+
+Enable Docker
+
+sudo systemctl enable docker
+sudo systemctl start docker
+sudo usermod -aG docker ec2-user
+newgrp docker
+
+docker --version
