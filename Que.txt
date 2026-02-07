@@ -1,0 +1,26 @@
+Q:Why didn’t you use Ubuntu 24.04 for Jenkins?
+
+Say this:
+
+“Jenkins prioritizes stability over newest OS releases.
+Ubuntu 24.04 ships with Java 21 and newer system components, which can cause compatibility issues with Jenkins and plugins.
+For OS-level Jenkins, I prefer Ubuntu 22.04 LTS.
+If I use Ubuntu 24.04, I run Jenkins in Docker to avoid host dependency issues.”
+
+
+Q: Interview-ready answer (memorize this)
+
+“In real environments, Jenkins is installed once using automation scripts or EC2 user-data. Manual installation is only for learning or PoC.”
+
+
+Q: Can SonarQube run as root?
+❌ No. Security risk.
+
+Q: Default port?
+✅ 9000
+
+Q: DB used in production?
+✅ PostgreSQL (never H2)
+
+Q: Why vm.max_map_count?
+✅ Elasticsearch dependency
