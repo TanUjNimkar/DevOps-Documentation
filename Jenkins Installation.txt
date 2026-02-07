@@ -1,0 +1,117 @@
+Jenkins Installation on Amazon Linux
+
+
+
+1️⃣ Launch EC2 with:
+
+Amazon Linux 2 OR Amazon Linux 2023
+
+t2.micro is fine (For Practice)
+
+Open port 8080 in security group
+
+
+2️⃣ Connect & update
+sudo yum update -y
+
+3️⃣ Install Java 17
+sudo yum install -y java-17-amazon-corretto
+
+
+Verify:
+
+java -version
+
+4️⃣ Add Jenkins repo (THIS is the clean part)
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+
+Import key:
+
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+5️⃣ Install Jenkins
+sudo yum install -y jenkins
+
+6️⃣ Start & enable Jenkins
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+sudo systemctl status jenkins
+
+
+You want:
+
+Active: active (running)
+
+7️⃣ Get admin password
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+
+Open in browser:
+
+http://<EC2-PUBLIC-IP>:8080
+
+---
+
+vi install-jenkins.sh
+
+#!/bin/bash
+set -e
+
+echo "Updating system..."
+sudo yum update -y
+
+echo "Installing Java 17 (Amazon Corretto)..."
+sudo yum install -y java-17-amazon-corretto
+
+echo "Verifying Java..."
+java -version
+
+echo "Adding Jenkins repository..."
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+echo "Importing Jenkins GPG key..."
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+echo "Installing Jenkins..."
+sudo yum install -y jenkins
+
+echo "Starting Jenkins service..."
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
+
+echo "Checking Jenkins status..."
+sudo systemctl status jenkins --no-pager
+
+echo "========================================"
+echo "Jenkins installed successfully"
+echo "Access: http://<EC2-PUBLIC-IP>:8080"
+echo "Initial Admin Password:"
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+echo "========================================"
+
+
+chmod +x install-jenkins.sh
+./install-jenkins.sh
+
+
+---
+
+In Real Time
+
+#!/bin/bash
+set -e
+
+sudo yum update -y
+sudo yum install -y java-17-amazon-corretto
+
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+
+sudo yum install -y jenkins
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
